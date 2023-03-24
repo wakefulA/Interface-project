@@ -50,6 +50,18 @@ public class Employee : Human
         Console.WriteLine("was created Employee");
     }
 
+    public Employee(string organization, int salary, int experience, string firstName, string lastName
+        , string patronymic, int dateOfBirth)
+    {
+        _organization = organization;
+        _salary = salary;
+        _experience = experience;
+        FirstName = firstName;
+        LastName = lastName;
+        Patronymic = patronymic;
+        DateOfBirth = dateOfBirth;
+    }
+
     ~Employee()
     {
         Console.WriteLine("was destroyed Employee");
@@ -61,9 +73,11 @@ public class Employee : Human
         Console.WriteLine($"Organization - {_organization}, Salary - {_salary}, Experience - {_experience}");
     }
 
-    public string Information()
+    public override string Information()
     {
-        string information = $"Organization - {_organization}, Salary - {_salary}, Experience - {_experience}";
+        string inf;
+        inf = base.Information();
+        string information = $"Organization - {_organization}, Salary - {_salary}, Experience - {_experience}, {inf}";
         return information;
     }
 }

@@ -23,6 +23,10 @@ public class UIServiceTwo : MonoBehaviour
     [SerializeField] private InputField _salary;
     [SerializeField] private InputField _experience;
     [SerializeField] private InputField _deleteIndex;
+    [SerializeField] private InputField _firstName;
+    [SerializeField] private InputField _lastName;
+    [SerializeField] private InputField _patronymic;
+    [SerializeField] private InputField _dateOfBirth;
 
     [Header("Buttons")]
     [SerializeField] private Button _buttonEnterToCreateMenu;
@@ -64,12 +68,15 @@ public class UIServiceTwo : MonoBehaviour
     private void DeleteAllEmployee()
     {
         _employers.Clear();
+        _consoleDeleteMenu.text = "List clear";
     }
 
     private void DeleteCurrentEmployee()
     {
         int index = Convert.ToInt32(_deleteIndex.text);
+        WriteDeleteInformation(_employers[index].GetFirstName());
         _employers.RemoveAt(index);
+        ClearDeleteInputField();
     }
 
     private void BackToStartMenuFromTheCreateMenu()
@@ -81,8 +88,12 @@ public class UIServiceTwo : MonoBehaviour
 
     private void CreateEmployeeButton()
     {
+        
         _employers.Add(new Employee(_organization.text, Convert.ToInt32(_salary.text),
-            Convert.ToInt32(_experience.text)));
+            Convert.ToInt32(_experience.text), _firstName.text, _lastName.text, _patronymic.text
+            , Convert.ToInt32(_dateOfBirth.text)));
+        WriteCreateInformation(_firstName.text);
+        ClearCreateInputField();
     }
 
     private void WriteInformation()
@@ -96,10 +107,20 @@ public class UIServiceTwo : MonoBehaviour
 
         foreach (var employee in _employers)
         {
-            information +=  employee.Information();
+            information += employee.Information();
         }
 
         _consoleStartMenu.text = information;
+    }
+
+    private void WriteDeleteInformation(string name)
+    {
+        _consoleDeleteMenu.text = $"Employee {name} was be deleted";
+    }
+
+    private void WriteCreateInformation(string name)
+    {
+        _consoleCreateMenu.text = $"Employee {name} was be created";
     }
 
     private void EnterToDeleteMenu()
@@ -130,4 +151,22 @@ public class UIServiceTwo : MonoBehaviour
     {
         _consoleCreateMenu.text = "";
     }
+
+    private void ClearCreateInputField()
+    {
+        _organization.text = "";
+        _salary.text = "";
+        _experience.text = "";
+        _dateOfBirth.text = "";
+        _patronymic.text = "";
+        _lastName.text = "";
+        _firstName.text = "";
+    }
+
+    private void ClearDeleteInputField()
+    {
+        _deleteIndex.text = "";
+    }
+    
+    
 }
